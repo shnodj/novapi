@@ -1,0 +1,16 @@
+{
+  "name": "novapi",
+  "lib": {
+    "dir": "."
+  },
+  "version": "2.11.0",
+  "frontend": {
+    "dir": "frontend",
+    "install": "npm install",
+    "build": "npm run build",
+    "dev:watcher": "npm run dev",
+    "dev:serverUrl": "http://localhost:34115"
+  },
+  "wailsjsdir": "./frontend/src",
+  "outputfilename": "novapi"
+}
