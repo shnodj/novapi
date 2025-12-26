@@ -151,24 +151,43 @@ go func() {
 
 
 
-#### 步骤四：渠道模块的两种类型实现
+#### 步骤四：渠道模块的两种类型实现 (深化设计)
 
-愿景是“配置渠道模块就能用”，分为**上线渠道**和**本地渠道**。
+我们的核心愿景是**解决用户的“本地 Token 焦虑”**。
+通过**Gateway（网关）**模式，Novapi 不仅是 API 的转发器，更是用户本地算力与权限的聚合器。
+我们将渠道分为**在线渠道**和**本地渠道**，特别是**本地渠道**，需要做到极致的自动发现与异构集成。
 
-1. **上线渠道 (Upstream/Proxy)**：
-* 这部分 `new-api` 已经做得非常完善（支持 OpenAI, Azure, Claude, Gemini 等）。
-* **保留原样**，允许用户填写 API Key 和 Base URL。
+1. **在线渠道 (Upstream/Proxy)**：
+* **定义**：传统的 API Key 转发模式。
+* **现状**：`new-api` 已完善支持 OpenAI, Azure, Claude, Gemini 等。
+* **策略**：保留原样，提供简洁的配置界面。
 
+2. **本地渠道 (Local/Native) —— 核心差异化竞争力**：
+* **痛点**：用户手头有各种零散的算力（Ollama）、各种工具自带的 AI 权限（GitHub Copilot CLI, AWS Q CLI），但无法统一调度，导致“Token 焦虑”。
+* **解决方案**：Novapi 作为一个**通用适配器（Universal Adapter）**，将这些异构资源转化为标准的 OpenAI 接口。
 
-2. **本地渠道 (Local/Offline)**：
-* 这是桌面端的亮点。需要支持直接调用本地运行的模型。
-* **Ollama 集成**：`new-api` 已支持 Ollama。我们需要在 UI 上简化它。
-* *自动发现*：检测默认端口 (11434)，列出可用模型。
+* **A. 进程级自动发现与托管 (Service Discovery & Managed Process)**
+    * **端口扫描**：自动检测 `localhost` 的常见端口（如 11434 Ollama, 1234 LM Studio, 8080 Llama.cpp），发现即由用户确认添加为渠道。
+    * **进程托管**：对于 `llama.cpp` 或 `ollama` 二进制文件，Novapi 可作为父进程直接启动它们，管理生命周期（启动、停止、日志监控），让用户无需手动敲命令行。
 
+* **B. CLI/Plugin 异构集成 (CLI Adapter)**
+    * **设计思路**：许多开发者工具（Code-CLI）如 `gh` (GitHub CLI), `aliyun-cli` 等已包含 AI 能力。Novapi 将通过**标准输入输出流 (stdio)** 封装这些 CLI，将其伪装成 OpenAI 接口。
+    * **场景举例**：
+        * **GitHub Copilot**：检测用户是否安装 `gh` 且已登录 Copilot。Novapi 后台调用 `gh copilot suggest ...` 并解析返回结果，对外提供 Chat 接口。
+        * **Company CLIs**：企业内部常有自带鉴权的 CLI 工具。Novapi 允许用户配置简单的“命令模板”，将其接入网关。
+    * **价值**：极大降低用户成本，复用已有的工具权限。
 
-* **Antigravity-Manager 模式 (Local Binary Runner)**：
-* 如果在桌面端集成 `llama.cpp` 或类似二进制文件，可以通过 Go 的 `os/exec` 管理子进程。
-* **实现**：用户下载模型 -> 桌面 App 启动子进程 (Ollama/Llama.cpp server) -> 创建一个指向 `localhost:随机端口` 的渠道 -> 可以在前端使用了。
+* **C. 插件环境嗅探 (Plugin Environment Sniffing)**
+    * **VSCode/JetBrains 插件**：扫描常见 IDE 插件目录，识别已安装的 LLM 插件（如 Continue, CodeGeeX）。
+    * **配置提取**：尝试读取这些插件的配置文件（通常是 JSON/XML），提取出用户已配置好的 Model Endpoint 或 API Key，实现“一键迁移配置”到 Novapi。
+
+3. **Gateway 的终极形态**：
+* 对外暴露统一的 `http://localhost:3000`。
+* 用户的所有应用（Chatbox, 终端, IDE）只需指向这个地址。
+* Novapi 在后台智能路由：
+    * 简单问题 -> 路由给本地 Ollama (免费)。
+    * 复杂编程问题 -> 路由给 CLI Adapter (GitHub Copilot)。
+    * 极难推理问题 -> 路由给在线 GPT-4 (付费)。
 
 
 
