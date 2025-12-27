@@ -1,6 +1,6 @@
 module novapi
 
-go 1.25.1
+go 1.23
 
 require (
 	github.com/QuantumNous/new-api v0.9.18
