@@ -3,7 +3,6 @@ package main
 import (
 	"embed"
 	"log"
-	"novapi/backend"
 
 	"github.com/wailsapp/wails/v2"
 	"github.com/wailsapp/wails/v2/pkg/logger"
@@ -17,17 +16,8 @@ import (
 var assets embed.FS
 
 func main() {
-	// Initialize Database
-	backend.InitDB("novapi.db")
-
-	// Initialize Memory Cache
-	backend.InitMemoryCache()
-
 	// Create an instance of the app structure
 	app := NewApp()
-
-	// Start Gin Server in a goroutine
-	go backend.StartGinServer(":3000")
 
 	// Create application with options
 	err := wails.Run(&options.App{
