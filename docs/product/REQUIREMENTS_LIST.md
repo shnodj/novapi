@@ -15,15 +15,20 @@
 *   [ ] **Config Compatibility:** Support loading/saving `mcp.json` (compatible with Cursor/LM Studio).
 *   [ ] **Tool Mapping:** Translate MCP "Resources" and "Tools" into OpenAI-compatible Function Definitions for the chat API.
 *   [ ] **Ollama Bridge:** When an MCP tool is used, translate the request to an Ollama "tool call" if the backend model supports it.
+*   [ ] **Browser Use Integration:** Bundle or provide 1-click setup for the "Browser Use" MCP server (web automation agent).
 
 ## 3. User Experience (P1)
 
+*   [ ] **Knowledge Base (RAG):**
+    *   Local file indexing (PDF, MD, TXT).
+    *   "Add to Context" button in Chat UI.
 *   [ ] **Featured Models:** Home screen widget showing "DeepSeek R1", "Llama 3", etc.
     *   One-click "Install" (triggers `ollama pull`).
     *   One-click "Run".
 *   [ ] **Local Server Discovery:**
     *   Auto-detect running Ollama instance.
     *   Auto-detect LM Studio server (port 1234).
+    *   Auto-detect Jan.ai / Cherry Studio APIs.
 *   [ ] **Tray Icon:** Run in background (system tray) to serve API requests even when window is closed.
 
 ## 4. Documentation & onboarding (P2)
