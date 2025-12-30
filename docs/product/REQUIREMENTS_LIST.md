@@ -15,26 +15,30 @@
 *   [ ] **Config Compatibility:** Support loading/saving `mcp.json` (compatible with Cursor/LM Studio).
 *   [ ] **Tool Mapping:** Translate MCP "Resources" and "Tools" into OpenAI-compatible Function Definitions for the chat API.
 *   [ ] **Ollama Bridge:** When an MCP tool is used, translate the request to an Ollama "tool call" if the backend model supports it.
-*   [ ] **Browser Use Integration:** Bundle or provide 1-click setup for the "Browser Use" MCP server (web automation agent).
+*   [ ] **Browser Use Integration:**
+    *   **Phase 1:** Support `npx` execution for `chrome-devtools-mcp` (Official DevTools protocol).
+    *   **Phase 2:** Create a "Recipe" to install `Saik0s/mcp-browser-use` (requires Python/Playwright) and configure it to use Novapi's local API (`http://localhost:8080/v1`) as the LLM provider.
 
 ## 3. User Experience (P1)
 
-*   [ ] **Knowledge Base (RAG):**
-    *   Local file indexing (PDF, MD, TXT).
-    *   "Add to Context" button in Chat UI.
-*   [ ] **Featured Models:** Home screen widget showing "DeepSeek R1", "Llama 3", etc.
-    *   One-click "Install" (triggers `ollama pull`).
-    *   One-click "Run".
+*   [ ] **Knowledge Base (RAG) - *Updated*:**
+    *   **Engine:** Integrate `philippgille/chromem-go` (Pure Go vector DB) for embedded, zero-dependency storage.
+    *   **UI:** "Add to Context" button -> parses file -> embeds via Ollama -> stores in `chromem-go`.
+*   [ ] **Featured Models - *Smart Recommendations*:**
+    *   Auto-detect System RAM.
+    *   Suggest `deepseek-r1:1.5b` for <8GB RAM, `deepseek-r1:8b` for 16GB, `deepseek-r1:32b` for 32GB+.
+    *   One-click "Install & Run".
 *   [ ] **Local Server Discovery:**
     *   Auto-detect running Ollama instance.
     *   Auto-detect LM Studio server (port 1234).
-    *   Auto-detect Jan.ai / Cherry Studio APIs.
+    *   Auto-detect Jan.ai (port 1337).
 *   [ ] **Tray Icon:** Run in background (system tray) to serve API requests even when window is closed.
 
 ## 4. Documentation & onboarding (P2)
 
 *   [ ] **MCP Tutorial:** "How to use the Filesystem MCP with Novapi".
 *   [ ] **DeepSeek Guide:** "Running DeepSeek R1 locally with Novapi".
+*   [ ] **Market Analysis:** Update `MARKET_ANALYSIS_2025.md` with Jan.ai v0.7.5 findings.
 
 ## 5. Engineering / Tech Debt
 

@@ -1,49 +1,57 @@
 # Product Research Log - February 2025 (Supplement)
 
-**Date:** 2025-02-24
-**Topic:** Emerging Competitors & MCP Opportunities
+**Date:** 2025-02-24 (Late Feb Update)
+**Topic:** Browser Use Integration & RAG Feasibility
 **Researcher:** Jules (Product Manager Agent)
 
-## 1. Competitive Landscape Analysis
+## 1. Browser Use Integration Analysis
 
-### 1.1 Jan.ai (v0.6.3+)
-*   **Overview:** A direct open-source competitor offering a "ChatGPT alternative" that runs 100% offline.
+There are two distinct approaches to "Browser Use" for Novapi, catering to different user needs:
+
+### 1.1 The "Agent" Approach (Autonomous)
+*   **Tool:** `Saik0s/mcp-browser-use` (based on the `browser-use` Python library + Playwright).
+*   **Mechanism:** Launches a *new*, clean browser instance controlled entirely by the LLM.
+*   **Pros:** Good for complex, multi-step tasks (e.g., "Go to Amazon, find X, add to cart").
+*   **Cons:** Heavy dependencies (Python, Playwright browsers). Hard to bundle in a single binary.
+*   **Integration:** Can use `langchain_openai` with `base_url`. We can point this to Novapi's local Ollama endpoint (`http://localhost:8080/v1`).
+*   **Recommendation:** Provide a guide or a "One-click Script" to install this side-by-side with Novapi, rather than embedding it.
+
+### 1.2 The "Copilot" Approach (Interactive)
+*   **Tool:** `djyde/browser-mcp` (Extension + Server) or `ChromeDevTools/chrome-devtools-mcp`.
+*   **Mechanism:** Connects to the user's *running* browser via an extension or DevTools protocol.
+*   **Pros:** Access to logged-in sessions (Gmail, GitHub, etc.). Lightweight (Node.js).
+*   **Cons:** Privacy concerns (access to user's main browser). Requires user to install a Chrome Extension.
+*   **Recommendation:** This fits the "Desktop App" vibe better. We should support `chrome-devtools-mcp` via `npx` (standard MCP) and investigate wrapping `djyde/browser-mcp` for a smoother UX.
+
+## 2. Local RAG / Knowledge Base Feasibility
+
+We need a lightweight, Go-native way to store vectors without requiring a heavy Python sidecar or Docker.
+
+### 2.1 Solution: `chromem-go`
+*   **Repo:** `philippgille/chromem-go`
+*   **Type:** Embeddable vector database for Go.
+*   **Features:**
+    *   In-memory with optional persistence to disk.
+    *   No CGO required (pure Go).
+    *   Zero 3rd party dependencies.
+    *   Supports OpenAI-compatible embedding APIs (which Novapi/Ollama provides).
+*   **Verdict:** This is the perfect candidate for Novapi's "Knowledge Base" feature (P1). It eliminates the need for a separate vector DB process.
+
+## 3. Jan.ai Updates (Feb 2025)
+
+*   **Version 0.7.5:** Released recently.
 *   **Key Features:**
-    *   **Experimental MCP Support:** Users can enable MCP Servers via settings.
-    *   **Localhost Connectivity:** "Connects cleanly" to Ollama (:11434) and LM Studio (:1234).
-    *   **Jan v1 Model:** A custom 4B parameter model optimized for tool calling and reasoning.
-    *   **Local RAG:** Built-in "Knowledge Base" (files/web).
-*   **Threat Assessment:** Jan is moving faster on "Client-side MCP" and RAG.
-*   **Novapi Opportunity:** Novapi differentiates by being a **Gateway** (API Host), not just a Client. We should focus on *serving* these local tools to other apps (like Cursor or VS Code) via our API, rather than just consuming them in our UI.
+    *   **MCP Support:** Jan is now an MCP Host (like LM Studio). They support `todoist` and `browser-mcp`.
+    *   **DeepSeek R1:** Native support.
+    *   **Extension Store:** They are moving towards an "Extension" model for features.
+*   **Implication:** Jan.ai is moving fast on MCP. Novapi *must* implement `mcp.json` support immediately to remain competitive. Their "Jan Browser MCP" is a direct competitor to our planned "Browser Use" feature.
 
-### 1.2 Cherry Studio
-*   **Overview:** "All-in-One AI Assistant" with aggressive feature updates.
-*   **Key Features:**
-    *   **Multi-Model Management:** Unified interface for OpenAI, Anthropic, and Local models.
-    *   **Knowledge Base:** Strong file/web import capabilities.
-    *   **Pre-configured Assistants:** 300+ "smart bodies" (agents).
-    *   **MCP Support:** Listed as a core feature.
-*   **Takeaway:** The market expectation for "Desktop AI" now includes **RAG** and **Multi-Provider Routing** as standard features.
+## 4. DeepSeek R1 Configuration
 
-### 1.3 Open WebUI Desktop
-*   **Overview:** Now has an Alpha desktop build (Tauri v2).
-*   **Impact:** Moves Open WebUI from "Docker/Server" territory into "Desktop App" territory.
-*   **Weakness:** Still feels like a web-wrapper; Novapi/Wails can offer tighter system integration (Tray icon, global shortcuts).
+For users with "Local Token Anxiety", we should recommend specific quantized versions based on RAM:
 
-## 2. Technology Trends & MCP
+*   **8GB RAM (MacBook Air):** `deepseek-r1:1.5b` (Fast, good for simple logic) or `deepseek-r1:7b` (Slower).
+*   **16GB RAM (MacBook Pro):** `deepseek-r1:8b` (Sweet spot) or `deepseek-r1:14b` (If nothing else running).
+*   **32GB+ RAM:** `deepseek-r1:32b`.
 
-### 2.1 The "Browser Use" Phenomenon
-*   **What is it?** An MCP server that allows an LLM to control a headless browser to perform tasks (click, type, extract).
-*   **Relevance:** This is currently the most "viral" use case for local agents.
-*   **Recommendation:** Novapi should bundle or provide a one-click setup for a "Browser Use" MCP server, allowing users to build "Web Agents" easily.
-
-### 2.2 Trending MCP Servers (2025)
-*   **Development:** GitHub, PostgreSQL, Docker.
-*   **Knowledge:** Exa Search (Research), Context 7 (Docs).
-*   **Utility:** Filesystem (Table stakes), Google Maps.
-
-## 3. Strategic Recommendations
-
-1.  **Pivot to "Gateway" Identity:** Don't just be another chat UI. Be the **Universal Local Host**. If a user runs Novapi, their Cursor/VS Code should instantly be able to access "Browser Use" or "Local RAG" via standard OpenAI-compatible endpoints provided by Novapi.
-2.  **"Browser Use" Integration (P0):** This is a high-value feature that differentiates us from simple chat wrappers.
-3.  **Knowledge Base (RAG) is Essential:** We cannot compete without "Add file to context".
+**Action:** The "Featured Models" UI should auto-detect system RAM (via Wails runtime) and suggest the correct tag.
