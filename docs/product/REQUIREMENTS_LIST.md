@@ -13,12 +13,19 @@
 
 *   [ ] **MCP Host Core:** Implement a client in Go that can spawn and communicate with MCP Servers via Stdio.
 *   [ ] **Config Compatibility:** Support loading/saving `mcp.json` (compatible with Cursor/LM Studio).
+*   [ ] **Deep Link Handler:** Support `novapi://install-mcp` (or compatible protocol) to install servers.
 *   [ ] **Tool Mapping:** Translate MCP "Resources" and "Tools" into OpenAI-compatible Function Definitions for the chat API.
-*   [ ] **Ollama Bridge:** When an MCP tool is used, translate the request to an Ollama "tool call" if the backend model supports it.
-*   [ ] **Browser Use Integration:** Bundle or provide 1-click setup for the "Browser Use" MCP server (web automation agent).
+*   [ ] **Ollama Bridge:** When an MCP tool is used, translate the request to an Ollama "tool call" (native API).
+*   [ ] **Built-in Servers:**
+    *   **Filesystem:** One-click enable (securely scoped).
+    *   **Browser:** Integration with `browser-use` or Puppeteer.
+    *   **Web Search:** Brave Search MCP integration.
 
 ## 3. User Experience (P1)
 
+*   [ ] **DeepSeek R1 Support:**
+    *   **Thinking UI:** Collapsible component to show/hide `<think>` traces.
+    *   **Distillation Prompts:** Presets for "Reasoning" system prompts.
 *   [ ] **Knowledge Base (RAG):**
     *   Local file indexing (PDF, MD, TXT).
     *   "Add to Context" button in Chat UI.
@@ -35,6 +42,7 @@
 
 *   [ ] **MCP Tutorial:** "How to use the Filesystem MCP with Novapi".
 *   [ ] **DeepSeek Guide:** "Running DeepSeek R1 locally with Novapi".
+*   [ ] **Migration Guide:** "Importing configs from LM Studio / Cursor".
 
 ## 5. Engineering / Tech Debt
 
