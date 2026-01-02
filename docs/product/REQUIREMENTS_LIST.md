@@ -16,12 +16,20 @@
 *   [ ] **Tool Mapping:** Translate MCP "Resources" and "Tools" into OpenAI-compatible Function Definitions for the chat API.
 *   [ ] **Ollama Bridge:** When an MCP tool is used, translate the request to an Ollama "tool call" if the backend model supports it.
 *   [ ] **Browser Use Integration:** Bundle or provide 1-click setup for the "Browser Use" MCP server (web automation agent).
+*   [ ] **MCP Marketplace UI:** A "Store" interface to browse and install community MCP servers (sourced from `modelcontextprotocol/servers`).
+*   [ ] **High-Value MCP Bundles:** One-click enable for:
+    *   **Brave Search:** For internet access.
+    *   **PostgreSQL/SQLite:** For database interaction.
+    *   **Git:** For code repository management.
 
 ## 3. User Experience (P1)
 
+*   [ ] **DeepSeek R1 Support:**
+    *   **Thinking Process Visualization:** Parse `<think>` tags in the chat stream and render them as a collapsible "Thinking..." section, distinct from the final answer.
 *   [ ] **Knowledge Base (RAG):**
     *   Local file indexing (PDF, MD, TXT).
     *   "Add to Context" button in Chat UI.
+    *   *MVP:* Implement as a "Search Files" MCP server first.
 *   [ ] **Featured Models:** Home screen widget showing "DeepSeek R1", "Llama 3", etc.
     *   One-click "Install" (triggers `ollama pull`).
     *   One-click "Run".
