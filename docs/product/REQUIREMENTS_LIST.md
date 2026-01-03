@@ -13,12 +13,14 @@
 
 *   [ ] **MCP Host Core:** Implement a client in Go that can spawn and communicate with MCP Servers via Stdio.
 *   [ ] **Config Compatibility:** Support loading/saving `mcp.json` (compatible with Cursor/LM Studio).
+*   [ ] **Remote MCP:** Support connecting to remote MCP servers (HTTP/SSE) to match LM Studio capabilities.
 *   [ ] **Tool Mapping:** Translate MCP "Resources" and "Tools" into OpenAI-compatible Function Definitions for the chat API.
 *   [ ] **Ollama Bridge:** When an MCP tool is used, translate the request to an Ollama "tool call" if the backend model supports it.
-*   [ ] **Browser Use Integration:** Bundle or provide 1-click setup for the "Browser Use" MCP server (web automation agent).
+*   [ ] **Browser Use Integration:** Bundle or provide 1-click setup for the "Browser Use" MCP server (`JovaniPink/mcp-browser-use`).
 
 ## 3. User Experience (P1)
 
+*   [ ] **Reasoning UI (DeepSeek R1):** Parse `<think>` tags or `reasoning_content` and display in a collapsible "Thinking Process" block.
 *   [ ] **Knowledge Base (RAG):**
     *   Local file indexing (PDF, MD, TXT).
     *   "Add to Context" button in Chat UI.
@@ -35,6 +37,7 @@
 
 *   [ ] **MCP Tutorial:** "How to use the Filesystem MCP with Novapi".
 *   [ ] **DeepSeek Guide:** "Running DeepSeek R1 locally with Novapi".
+*   [ ] **Agent Guide:** "Setting up the Browser Use Agent with Novapi".
 
 ## 5. Engineering / Tech Debt
 
