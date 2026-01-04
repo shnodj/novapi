@@ -1,7 +1,7 @@
 # Product Requirements List
 
 **Status:** Active
-**Last Updated:** 2025-02-24
+**Last Updated:** 2025-03-15
 
 ## 1. Core Platform (P0)
 
@@ -11,7 +11,8 @@
 
 ## 2. Model Context Protocol (MCP) (P0)
 
-*   [ ] **MCP Host Core:** Implement a client in Go that can spawn and communicate with MCP Servers via Stdio.
+*   [ ] **MCP Host Core (Stdio):** Implement a client in Go that can spawn and communicate with MCP Servers via Stdio.
+*   [ ] **MCP Host Core (HTTP/SSE):** *[New]* Implement HTTP/SSE transport support. Required for long-running agents like "Browser Use" to avoid Stdio timeouts.
 *   [ ] **Config Compatibility:** Support loading/saving `mcp.json` (compatible with Cursor/LM Studio).
 *   [ ] **Tool Mapping:** Translate MCP "Resources" and "Tools" into OpenAI-compatible Function Definitions for the chat API.
 *   [ ] **Ollama Bridge:** When an MCP tool is used, translate the request to an Ollama "tool call" if the backend model supports it.
@@ -19,12 +20,12 @@
 
 ## 3. User Experience (P1)
 
+*   [ ] **DeepSeek R1 Support:**
+    *   **Thinking UI:** *[New]* Parse `<think>` tags and render them in a collapsible "Thinking Process" section.
+    *   **Featured Widget:** Home screen widget for one-click install (`ollama pull deepseek-r1`).
 *   [ ] **Knowledge Base (RAG):**
     *   Local file indexing (PDF, MD, TXT).
     *   "Add to Context" button in Chat UI.
-*   [ ] **Featured Models:** Home screen widget showing "DeepSeek R1", "Llama 3", etc.
-    *   One-click "Install" (triggers `ollama pull`).
-    *   One-click "Run".
 *   [ ] **Local Server Discovery:**
     *   Auto-detect running Ollama instance.
     *   Auto-detect LM Studio server (port 1234).
