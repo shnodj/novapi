@@ -1,7 +1,7 @@
 # Product Requirements List
 
 **Status:** Active
-**Last Updated:** 2025-02-24
+**Last Updated:** 2025-03-01
 
 ## 1. Core Platform (P0)
 
@@ -11,32 +11,39 @@
 
 ## 2. Model Context Protocol (MCP) (P0)
 
-*   [ ] **MCP Host Core:** Implement a client in Go that can spawn and communicate with MCP Servers via Stdio.
+*   [ ] **MCP Host Core (Stdio):** Implement client for spawning/communicating with local Stdio MCP Servers.
+*   [ ] **MCP Host Core (HTTP/SSE):** Support connecting to long-running MCP agents (like `browser-use`) via HTTP/SSE. *[New - Critical for Agents]*
 *   [ ] **Config Compatibility:** Support loading/saving `mcp.json` (compatible with Cursor/LM Studio).
-*   [ ] **Tool Mapping:** Translate MCP "Resources" and "Tools" into OpenAI-compatible Function Definitions for the chat API.
-*   [ ] **Ollama Bridge:** When an MCP tool is used, translate the request to an Ollama "tool call" if the backend model supports it.
-*   [ ] **Browser Use Integration:** Bundle or provide 1-click setup for the "Browser Use" MCP server (web automation agent).
+*   [ ] **Tool Mapping:** Translate MCP "Resources" and "Tools" into OpenAI-compatible Function Definitions.
+*   [ ] **Ollama Bridge:** Translate MCP tool calls to Ollama native tool calls.
 
-## 3. User Experience (P1)
+## 3. High-Value Integrations (P1)
 
-*   [ ] **Knowledge Base (RAG):**
-    *   Local file indexing (PDF, MD, TXT).
-    *   "Add to Context" button in Chat UI.
-*   [ ] **Featured Models:** Home screen widget showing "DeepSeek R1", "Llama 3", etc.
-    *   One-click "Install" (triggers `ollama pull`).
-    *   One-click "Run".
+*   [ ] **Browser Agent Bundle:**
+    *   One-click setup for `Saik0s/mcp-browser-use`.
+    *   Manage the background daemon process.
+    *   UI for "Deep Research" (Plan -> Search -> Synthesize).
+*   [ ] **MCP Marketplace UI:**
+    *   Browse/Install servers from `smithery.ai` or `modelcontextprotocol/servers`.
+    *   Visual management of installed servers.
+
+## 4. User Experience (P1)
+
+*   [ ] **Reasoning UI (DeepSeek R1):**
+    *   Parse `<think>` tags in streaming responses.
+    *   Render as collapsible "Thinking Process" section (default collapsed).
+*   [ ] **Knowledge Base (Lite RAG):**
+    *   Local file indexing using "Search Files" MCP server (vs embedded vector DB).
+    *   "Add to Context" drag-and-drop.
 *   [ ] **Local Server Discovery:**
-    *   Auto-detect running Ollama instance.
-    *   Auto-detect LM Studio server (port 1234).
-    *   Auto-detect Jan.ai / Cherry Studio APIs.
-*   [ ] **Tray Icon:** Run in background (system tray) to serve API requests even when window is closed.
+    *   Auto-detect running Ollama, LM Studio, Jan.ai instances.
 
-## 4. Documentation & onboarding (P2)
+## 5. Documentation & Onboarding (P2)
 
 *   [ ] **MCP Tutorial:** "How to use the Filesystem MCP with Novapi".
 *   [ ] **DeepSeek Guide:** "Running DeepSeek R1 locally with Novapi".
 
-## 5. Engineering / Tech Debt
+## 6. Engineering / Tech Debt
 
 *   [ ] **CI/CD:** Ensure Linux builds work (GTK dependencies).
 *   [ ] **Release:** Automate signing for macOS (notarization) - *Long term*.
