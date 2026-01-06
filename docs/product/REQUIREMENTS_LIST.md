@@ -11,17 +11,18 @@
 
 ## 2. Model Context Protocol (MCP) (P0)
 
-*   [ ] **MCP Host Core:** Implement a client in Go that can spawn and communicate with MCP Servers via Stdio.
+*   [ ] **MCP Host Core:** Implement a client in Go that can spawn and communicate with MCP Servers via Stdio and SSE.
 *   [ ] **Config Compatibility:** Support loading/saving `mcp.json` (compatible with Cursor/LM Studio).
+*   [ ] **MCP Marketplace UI:** A catalog interface to discover and install community servers (sourced from `modelcontextprotocol/servers`).
+*   [ ] **Deep Link Support:** Handle `novapi://install-mcp?url=...` for one-click installation.
 *   [ ] **Tool Mapping:** Translate MCP "Resources" and "Tools" into OpenAI-compatible Function Definitions for the chat API.
 *   [ ] **Ollama Bridge:** When an MCP tool is used, translate the request to an Ollama "tool call" if the backend model supports it.
-*   [ ] **Browser Use Integration:** Bundle or provide 1-click setup for the "Browser Use" MCP server (web automation agent).
+*   [ ] **Browser Use Integration:** Provide a streamlined setup for `mcp-browser-use` (Python) or `puppeteer-mcp` (Node) to enable agentic web browsing.
 
 ## 3. User Experience (P1)
 
-*   [ ] **Knowledge Base (RAG):**
-    *   Local file indexing (PDF, MD, TXT).
-    *   "Add to Context" button in Chat UI.
+*   [ ] **"Thinking" Process UI:** Parse `<think>` tags (DeepSeek R1) or `reasoning_content` fields and display them in a collapsible/expandable accordion to reduce clutter while preserving transparency.
+*   [ ] **Lite RAG (via MCP):** Instead of a heavy built-in vector DB, bundle the `filesystem` and `fetch` MCP servers to provide instant context from local files and web pages.
 *   [ ] **Featured Models:** Home screen widget showing "DeepSeek R1", "Llama 3", etc.
     *   One-click "Install" (triggers `ollama pull`).
     *   One-click "Run".
