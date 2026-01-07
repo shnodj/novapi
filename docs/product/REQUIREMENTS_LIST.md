@@ -1,7 +1,7 @@
 # Product Requirements List
 
 **Status:** Active
-**Last Updated:** 2025-02-24
+**Last Updated:** 2025-03-14
 
 ## 1. Core Platform (P0)
 
@@ -13,27 +13,28 @@
 
 *   [ ] **MCP Host Core:** Implement a client in Go that can spawn and communicate with MCP Servers via Stdio.
 *   [ ] **Config Compatibility:** Support loading/saving `mcp.json` (compatible with Cursor/LM Studio).
-*   [ ] **Tool Mapping:** Translate MCP "Resources" and "Tools" into OpenAI-compatible Function Definitions for the chat API.
-*   [ ] **Ollama Bridge:** When an MCP tool is used, translate the request to an Ollama "tool call" if the backend model supports it.
-*   [ ] **Browser Use Integration:** Bundle or provide 1-click setup for the "Browser Use" MCP server (web automation agent).
+*   [ ] **MCP Permission Manager:** UI to Approve/Deny tool execution requests (Security).
+*   [ ] **Essential MCP Servers (Bundled/1-Click):**
+    *   **GitHub:** `github/github-mcp-server` (Codebase management).
+    *   **Browser:** `microsoft/playwright-mcp` OR `mcp-browser-use` (Web automation).
+*   [ ] **Tool Mapping:** Translate MCP "Resources" and "Tools" into OpenAI-compatible Function Definitions.
 
 ## 3. User Experience (P1)
 
-*   [ ] **Knowledge Base (RAG):**
+*   [ ] **DeepSeek R1 Support (Critical):**
+    *   **Thinking UI:** Parse `<think>...</think>` tags and render as a collapsible "Thinking Process" accordion.
+    *   **One-Click Run:** "Featured Models" widget specifically for DeepSeek R1 (distilled versions).
+*   [ ] **Knowledge Base (Lite RAG):**
     *   Local file indexing (PDF, MD, TXT).
     *   "Add to Context" button in Chat UI.
-*   [ ] **Featured Models:** Home screen widget showing "DeepSeek R1", "Llama 3", etc.
-    *   One-click "Install" (triggers `ollama pull`).
-    *   One-click "Run".
-*   [ ] **Local Server Discovery:**
-    *   Auto-detect running Ollama instance.
-    *   Auto-detect LM Studio server (port 1234).
-    *   Auto-detect Jan.ai / Cherry Studio APIs.
-*   [ ] **Tray Icon:** Run in background (system tray) to serve API requests even when window is closed.
+*   [ ] **Featured Models Widget:**
+    *   Curated list (DeepSeek, Llama 3, Qwen).
+    *   Visual status indicators (Downloading, Running).
+*   [ ] **Tray Icon:** Run in background.
 
 ## 4. Documentation & onboarding (P2)
 
-*   [ ] **MCP Tutorial:** "How to use the Filesystem MCP with Novapi".
+*   [ ] **MCP Tutorial:** "How to use the GitHub MCP with Novapi".
 *   [ ] **DeepSeek Guide:** "Running DeepSeek R1 locally with Novapi".
 
 ## 5. Engineering / Tech Debt
