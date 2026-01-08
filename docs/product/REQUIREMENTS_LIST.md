@@ -1,7 +1,7 @@
 # Product Requirements List
 
 **Status:** Active
-**Last Updated:** 2025-02-24
+**Last Updated:** 2025-03-11
 
 ## 1. Core Platform (P0)
 
@@ -13,15 +13,18 @@
 
 *   [ ] **MCP Host Core:** Implement a client in Go that can spawn and communicate with MCP Servers via Stdio.
 *   [ ] **Config Compatibility:** Support loading/saving `mcp.json` (compatible with Cursor/LM Studio).
+*   [ ] **One-Click Installation (Deep Link):**
+    *   Register `novapi://` protocol handler.
+    *   Implement `novapi://install-mcp?config=...` handler to import servers from Glama/Smithery registries (Parity with LM Studio).
 *   [ ] **Tool Mapping:** Translate MCP "Resources" and "Tools" into OpenAI-compatible Function Definitions for the chat API.
 *   [ ] **Ollama Bridge:** When an MCP tool is used, translate the request to an Ollama "tool call" if the backend model supports it.
-*   [ ] **Browser Use Integration:** Bundle or provide 1-click setup for the "Browser Use" MCP server (web automation agent).
+*   [ ] **Browser Use Integration:** Bundle or provide 1-click setup for the "Browser Use" MCP server to match Jan.ai's capabilities.
 
 ## 3. User Experience (P1)
 
-*   [ ] **Knowledge Base (RAG):**
-    *   Local file indexing (PDF, MD, TXT).
-    *   "Add to Context" button in Chat UI.
+*   [ ] **DeepSeek R1 "Thinking" UI:**
+    *   Parse `<think>...</think>` tags in streaming responses.
+    *   Render as a collapsible "Thinking Process" block (default collapsed).
 *   [ ] **Featured Models:** Home screen widget showing "DeepSeek R1", "Llama 3", etc.
     *   One-click "Install" (triggers `ollama pull`).
     *   One-click "Run".
