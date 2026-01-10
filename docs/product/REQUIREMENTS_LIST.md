@@ -1,7 +1,7 @@
 # Product Requirements List
 
 **Status:** Active
-**Last Updated:** 2025-02-24
+**Last Updated:** 2026-01-10
 
 ## 1. Core Platform (P0)
 
@@ -11,32 +11,35 @@
 
 ## 2. Model Context Protocol (MCP) (P0)
 
-*   [ ] **MCP Host Core:** Implement a client in Go that can spawn and communicate with MCP Servers via Stdio.
+*   [ ] **MCP Host Core:** Implement a client in Go that can spawn (Stdio) and connect (HTTP/SSE) to MCP Servers.
+    *   *Update:* Must support HTTP/SSE for long-running agents like `browser-use`.
 *   [ ] **Config Compatibility:** Support loading/saving `mcp.json` (compatible with Cursor/LM Studio).
-*   [ ] **Tool Mapping:** Translate MCP "Resources" and "Tools" into OpenAI-compatible Function Definitions for the chat API.
-*   [ ] **Ollama Bridge:** When an MCP tool is used, translate the request to an Ollama "tool call" if the backend model supports it.
-*   [ ] **Browser Use Integration:** Bundle or provide 1-click setup for the "Browser Use" MCP server (web automation agent).
+*   [ ] **Deep Link Handler:** Implement `novapi://mcp/install?url=...` for one-click server installation (Parity with LM Studio).
+*   [ ] **Tool Mapping:** Translate MCP "Resources" and "Tools" into OpenAI-compatible Function Definitions.
+*   [ ] **Browser Use Integration:** Bundle `Saik0s/mcp-browser-use` (via Docker or local binary) and connect via HTTP.
 
 ## 3. User Experience (P1)
 
-*   [ ] **Knowledge Base (RAG):**
-    *   Local file indexing (PDF, MD, TXT).
+*   [ ] **DeepSeek R1 UI:** Parse `<think>` tags in streaming responses. Visualize "Thinking Process" in a collapsible, distinct UI element.
+*   [ ] **Knowledge Base (Lite RAG):**
+    *   Use "Search Files" MCP instead of complex vector DBs.
     *   "Add to Context" button in Chat UI.
-*   [ ] **Featured Models:** Home screen widget showing "DeepSeek R1", "Llama 3", etc.
+*   [ ] **Featured Models:** Home screen widget.
     *   One-click "Install" (triggers `ollama pull`).
-    *   One-click "Run".
 *   [ ] **Local Server Discovery:**
-    *   Auto-detect running Ollama instance.
-    *   Auto-detect LM Studio server (port 1234).
-    *   Auto-detect Jan.ai / Cherry Studio APIs.
-*   [ ] **Tray Icon:** Run in background (system tray) to serve API requests even when window is closed.
+    *   Auto-detect running Ollama, LM Studio, Jan.ai.
 
-## 4. Documentation & onboarding (P2)
+## 4. Local Channels & Integrations (P2)
+
+*   [ ] **GitHub Copilot Bridge:** Explore integrating `copilot-api` to allow users to use their Copilot subscription as a local OpenAI endpoint.
+*   [ ] **Tray Icon:** Background service mode.
+
+## 5. Documentation & onboarding (P2)
 
 *   [ ] **MCP Tutorial:** "How to use the Filesystem MCP with Novapi".
 *   [ ] **DeepSeek Guide:** "Running DeepSeek R1 locally with Novapi".
 
-## 5. Engineering / Tech Debt
+## 6. Engineering / Tech Debt
 
 *   [ ] **CI/CD:** Ensure Linux builds work (GTK dependencies).
-*   [ ] **Release:** Automate signing for macOS (notarization) - *Long term*.
+*   [ ] **Release:** Automate signing for macOS.
